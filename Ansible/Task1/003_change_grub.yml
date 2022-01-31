@@ -1,0 +1,24 @@
+---
+- name: edit grub
+  hosts: nodes
+  vars:
+    grub_conf: /etc/default/grub
+  tasks:
+  - name: add net.ifnames=0
+    lineinfile:
+      state: present
+      dest: "{{ grub_conf }}"
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* net.ifnames)\"[^\"]+)(\".*)'
+      line: '\1 net.ifnames=0\2'
+  - name: add biosdevname=0
+    lineinfile:
+      state: present
+      dest: "{{ grub_conf }}"
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.* biosdevname)\"[^\"]+)(\".*)'
+      line: '\1 biosdevname=0\2'
+
+  - name: run grub2-mkconfig
+    command: "grub2-mkconfig -o /boot/grub2/grub.cfg"
+...
