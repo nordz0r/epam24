@@ -1,0 +1,18 @@
+---
+- name: uninstall webserver on nodes
+  hosts: nodes
+  tasks:
+  - name: disable firewall
+    firewalld:
+        service: https
+        permanent: yes
+        state: disabled
+  - name: reload firewall
+    service: name=firewalld state=reloaded
+  - name: remove index.html
+    file:
+        path: /var/www/html/index.html
+        state: absent
+  - name: uninstall Apache2
+    package: name=httpd state=absent
+...
