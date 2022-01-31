@@ -1,0 +1,23 @@
+---
+- name: install webserver on nodes
+  hosts: nodes
+  tasks:
+  - name: install Apache2
+    package: name=httpd state=latest
+  - name: enable Apache2
+    service: name=httpd state=started
+  - name: create index.html
+    lineinfile: 
+        path: /var/www/html/index.html 
+        create: yes 
+        owner: apache
+        group: apache
+        line: "Welcome to my web server"
+  - name: enable firewall
+    firewalld:
+        service: https
+        permanent: yes
+        state: enabled
+  - name: reload firewall
+    service: name=firewalld state=reloaded
+...
