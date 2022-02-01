@@ -3,9 +3,13 @@
   hosts: nodes
   tasks:
   - name: install Apache2
-    package: name=httpd state=latest
+    package: 
+        name: httpd
+        state: latest
   - name: enable Apache2
-    service: name=httpd state=started
+    service: 
+        name: httpd 
+        state: started
   - name: create index.html
     lineinfile: 
         path: /var/www/html/index.html 
@@ -19,5 +23,7 @@
         permanent: yes
         state: enabled
   - name: reload firewall
-    service: name=firewalld state=reloaded
+    service: 
+        name: firewalld 
+        state: reloaded
 ...
