@@ -1,0 +1,17 @@
+---
+- name: create a user
+  hosts: nodes
+  vars_files:
+    - users.yml
+  tasks:
+    - name: create users 
+      user:
+        name: "{{ item.key.lower() }}"
+        password: "{{ item.value.password | password_hash('sha512') }}"
+        home: "/home/{{ item.key.lower() }}"
+        comment: "{{ item.key.lower() }}@example.com"
+        create_home: yes
+        state: present
+        update_password: on_create
+      with_dict: "{{ users }}"  
+...
