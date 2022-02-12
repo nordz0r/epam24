@@ -1,0 +1,9 @@
+[nodes]
+node1.example.com
+node2.example.com
+
+[webservers]
+node1.example.com
+
+[ftp]
+node2.example.com
