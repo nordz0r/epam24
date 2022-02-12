@@ -1,2 +1,13 @@
 ---
 # tasks file for vsftpd
+- name: install {{ vsftpd_service }} and libs for SELinux
+  include_tasks: "install.yml"
+
+- name: configure {{ vsftpd_service }}
+  include_tasks: "configure.yml"
+
+- name: ensure vsftpd has selected state and enabled on boot
+  service:
+    name: "{{ vsftpd_service }}"
+    state: "{{ vsftpd_state }}"
+    enabled: true

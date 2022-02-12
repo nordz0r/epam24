@@ -1,2 +1,5 @@
 ---
 # vars file for vsftpd
+vsftpd_service: vsftpd
+vsftpd_restart_state: restarted
+vsftpd_state: started

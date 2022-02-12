@@ -1,0 +1,44 @@
+---
+# tasks file for vsftpd
+- name: enable ports on firewall
+  firewalld:
+    zone: public
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: ['20-21/tcp', '30000-31000/tcp']
+  notify: reload firewalld
+
+- name: create directory {{ upload_path }}
+  file:
+    path: "{{ upload_path }}"
+    state: directory
+    mode: 0777
+    owner: root
+
+- name: create vsftpd.conf from template
+  template:
+    src: vsftpd.j2
+    dest: "{{ config_path }}"
+    mode: 0644
+    owner: root
+  notify: restart {{ vsftpd_service }}
+
+- name: Set SELinux context for {{ ftp_path }} and {{ upload_path }}
+  sefcontext:
+    target: "{{ item.target }}"
+    setype: "{{ item.setype }}"
+    reload: True
+    state: present
+  with_items:
+    - { target: '{{ ftp_path }}', setype: 'public_content_t' }
+    - { target: '{{ upload_path }}', setype: 'public_content_rw_t' }
+  notify: apple restorecon
+
+- name: setting SELinux booleans
+  seboolean:
+    name: "{{ item.key }}"
+    state: "{{ item.value }}"
+    ignore_selinux_state: yes
+    persistent: yes
+  with_dict: "{{ vsftpd_seboolean }}"

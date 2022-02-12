@@ -1,0 +1,12 @@
+---
+# tasks file for vsftpd
+- name: install {{ vsftpd_service }}
+  package:
+    name: "{{ vsftpd_service }}"
+    state: latest
+
+- name: install Python libs for SELinux 
+  package:
+    name: "{{ item }}"
+    state: latest
+  loop: ['python3-libselinux', 'python3-libsemanage', 'policycoreutils-python-utils']

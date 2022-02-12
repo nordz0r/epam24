@@ -1,2 +1,15 @@
 ---
 # handlers file for vsftpd
+- name: restart {{ vsftpd_service }}
+  service:
+    name: "{{ vsftpd_service }}"
+    state: "{{ vsftpd_restart_state }}"
+
+- name: apple restorecon
+  shell: restorecon -R -v {{ item }}
+  loop: ['{{ ftp_path }}', '{{ upload_path }}']
+    
+- name: reload firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

@@ -1,2 +1,17 @@
 ---
 # defaults file for vsftpd
+anonymous_enable: "YES"
+ftp_path: "/var/ftp/pub"
+upload_path: "/var/ftp/pub/upload"
+write_enable: "YES"
+anon_upload_enable: "YES"
+listen: "YES"
+anon_mkdir_write_enable: "YES"
+anon_other_write_enable: "YES"
+no_anon_password: "YES"
+local_enable: "NO"
+config_path: "/etc/vsftpd/vsftpd.conf"
+
+
+vsftpd_seboolean:
+  ftpd_anon_write: yes

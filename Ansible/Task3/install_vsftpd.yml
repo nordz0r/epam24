@@ -1,0 +1,6 @@
+---
+- name: Install vsftpd
+  hosts: ftp
+
+  roles:
+    - role: vsftpd
