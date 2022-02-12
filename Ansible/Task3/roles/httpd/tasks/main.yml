@@ -14,7 +14,7 @@
 - name: start configure task 
   include_tasks: "configure.yml"
 
-- name: ensure httpd has selected state and enabled on boot.
+- name: ensure httpd has selected state and enabled on boot
   service:
     name: "{{ httpd_service }}"
     state: "{{ httpd_state }}"

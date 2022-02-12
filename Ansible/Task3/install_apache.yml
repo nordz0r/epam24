@@ -1,5 +1,5 @@
 ---
-- name: install apache
+- name: Install apache
   hosts: webservers
 
   roles:
