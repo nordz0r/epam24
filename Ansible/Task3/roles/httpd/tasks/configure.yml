@@ -1,0 +1,25 @@
+---
+  - name: start firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+
+  - name: enable port:{{ httpd_port }} in firewall
+    firewalld:
+      zone: public
+      port: "{{ httpd_port }}/tcp"
+      permanent: true
+      state: enabled
+    notify: reload firewalld
+
+  - name: create index.html
+    copy:
+      src: index.html
+      dest: "{{ httpd_index_folder }}/index.html"
+    
+  - name: create httpd.conf from template
+    template:
+      src: httpd.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: restart httpd

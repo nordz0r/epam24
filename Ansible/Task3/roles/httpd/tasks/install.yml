@@ -1,0 +1,5 @@
+---
+- name: install apache (httpd)
+  package:
+    name: "{{ httpd_package }}"
+    state: "{{ httpd_packages_state }}"

@@ -1,0 +1,5 @@
+---
+# vars file for httpd
+httpd_service: httpd
+httpd_daemon: httpd
+httpd_package: httpd

@@ -1,0 +1,6 @@
+---
+- name: install apache
+  hosts: webservers
+
+  roles:
+    - role: httpd

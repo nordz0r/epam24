@@ -1,0 +1,21 @@
+---
+# tasks file for httpd
+# - name: include variables
+#   include_vars: "main.yml"
+
+- name: define httpd_package
+  set_fact:
+    httpd_package: "{{ httpd_package }}"
+  when: httpd_package is not defined
+
+- name: start install task
+  include_tasks: "install.yml"
+
+- name: start configure task 
+  include_tasks: "configure.yml"
+
+- name: ensure httpd has selected state and enabled on boot.
+  service:
+    name: "{{ httpd_service }}"
+    state: "{{ httpd_state }}"
+    enabled: "{{ httpd_enabled }}"

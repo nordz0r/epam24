@@ -1,0 +1,11 @@
+---
+# handlers file for httpd
+- name: restart httpd 
+  service:
+    name: "{{ httpd_service }}"
+    state: "{{ httpd_restart_state }}"
+
+- name: reload firewalld
+  service: 
+    name: firewalld 
+    state: reloaded

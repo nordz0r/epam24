@@ -1,0 +1,10 @@
+---
+# defaults file for httpd
+httpd_port: 80
+httpd_user_group: apache
+httpd_index_folder: /var/www/html
+httpd_state: started
+httpd_packages_state: present
+httpd_restart_state: restarted
+httpd_enabled: true
+httpd_server_admin: nord@example.com
